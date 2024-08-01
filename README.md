@@ -13,3 +13,5 @@ Client component:
 Từ Next.js version 13 thì tất cả component trong Next.js đều là server component, nếu muốn dùng client component thì thêm tag "use client" ở mỗi đầu component
 
 Khi sử dụng client component thì phần ui sẽ được render ở phía server, còn những phần action của người dùng sẽ được load ở phía client(quá trình hydrate).
+
+Group route trong Next.js thì dùng cú pháp (group name).
