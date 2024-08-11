@@ -1,8 +1,28 @@
-"use client";
+import { Metadata } from "next";
 import React from "react";
-import { useParams } from "next/navigation";
-const ChildBlog: React.FC = () => {
-    const params = useParams();
+
+interface Props {
+    params: {
+        blogId: string
+    }
+}
+
+export const generateMetadata = async ({ params }: Props): Promise<Metadata> => {
+    const blogName = await new Promise(resolved => {
+        setTimeout(() => {
+            resolved("Frontend")
+        }, 200);
+    });
+
+    return {
+        title: {
+            absolute: `Blog ${blogName}`
+        },
+        description: `Blog Description ${blogName}`,
+    }
+};
+const ChildBlog: React.FC<Props> = ({ params }) => {
+
     return (
         <main>
             Child blog {params.blogId}
