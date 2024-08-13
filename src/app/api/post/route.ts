@@ -41,3 +41,34 @@ export async function POST(req: NextRequest) {
         })
     }
 }
+
+export async function GET(req: NextRequest) {
+    await connectDB();
+    try {
+        const limit = req.nextUrl.searchParams.get("limit") ?? 2;
+        const page = req.nextUrl.searchParams.get("page") ?? 1;
+        const totalPosts = await Post.countDocuments();
+        const totalPage = Math.ceil(totalPosts / Number(limit));
+        const allPost = await Post.find().skip((Number(page) - 1) * Number(limit)).limit(Number(limit));
+
+        return NextResponse.json({
+            data: allPost,
+            meta: {
+                totalPage,
+                totalPosts
+            },
+            message: "Success",
+        }, {
+            status: 200,
+            statusText: "Get success"
+        })
+    } catch (error) {
+        return NextResponse.json({
+            data: null,
+            message: "Error",
+        }, {
+            status: 400,
+            statusText: "Failed"
+        })
+    }
+}
